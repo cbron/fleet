@@ -1,0 +1,1074 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.8">
+    
+    
+      
+        <title>Understanding Bundles - Fleet - GitOps at Scale</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.01afc2df.min.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/palette.83bccb1f.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#4cae4f">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,400i,700%7C&display=fallback">
+        <style>body,input{font-family:"Work Sans",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="green" data-md-color-accent="">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#understanding-bundles" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href=".." title="Fleet - GitOps at Scale" class="md-header-nav__button md-logo" aria-label="Fleet - GitOps at Scale">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Fleet - GitOps at Scale
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Understanding Bundles
+            
+          </span>
+        </div>
+      
+    </div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/rancher/fleet/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Fleet - GitOps at Scale" class="md-nav__button md-logo" aria-label="Fleet - GitOps at Scale">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    Fleet - GitOps at Scale
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/rancher/fleet/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../quickstart/" title="Quick Start" class="md-nav__link">
+      Quick Start
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../concepts/" title="Core Concepts" class="md-nav__link">
+      Core Concepts
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../architecture/" title="Architecture" class="md-nav__link">
+      Architecture
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Operator Guide
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Operator Guide" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Operator Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-1" type="checkbox" id="nav-5-1">
+    
+    <label class="md-nav__link" for="nav-5-1">
+      Installation
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Installation" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Installation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../installation/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../single-cluster-install/" title="Single Cluster Install" class="md-nav__link">
+      Single Cluster Install
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../multi-cluster-install/" title="Multi-cluster Install" class="md-nav__link">
+      Multi-cluster Install
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../uninstall/" title="Uninstall" class="md-nav__link">
+      Uninstall
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../namespaces/" title="Namespaces" class="md-nav__link">
+      Namespaces
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-3" type="checkbox" id="nav-5-3">
+    
+    <label class="md-nav__link" for="nav-5-3">
+      Managing Clusters
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Managing Clusters" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Managing Clusters
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-3-1" type="checkbox" id="nav-5-3-1">
+    
+    <label class="md-nav__link" for="nav-5-3-1">
+      Registration
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Registration" data-md-level="3">
+      <label class="md-nav__title" for="nav-5-3-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Registration
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cluster-overview/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cluster-tokens/" title="Cluster Registration Tokens" class="md-nav__link">
+      Cluster Registration Tokens
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../agent-initiated/" title="Agent Initiated" class="md-nav__link">
+      Agent Initiated
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cluster-initiated.md" title="None" class="md-nav__link">
+      None
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cluster-group/" title="Cluster Groups" class="md-nav__link">
+      Cluster Groups
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+    
+    <label class="md-nav__link" for="nav-6">
+      User Guide
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        User Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6-1" type="checkbox" id="nav-6-1">
+    
+    <label class="md-nav__link" for="nav-6-1">
+      Managing Git Repos
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Managing Git Repos" data-md-level="2">
+      <label class="md-nav__title" for="nav-6-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Managing Git Repos
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gitrepo-add/" title="Registering" class="md-nav__link">
+      Registering
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gitrepo-rm/" title="Removing" class="md-nav__link">
+      Removing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gitrepo-structure/" title="Expected Repo Structure" class="md-nav__link">
+      Expected Repo Structure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gitrepo-targets/" title="Mapping to Downstream Clusters" class="md-nav__link">
+      Mapping to Downstream Clusters
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Understanding Bundles
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Understanding Bundles" class="md-nav__link md-nav__link--active">
+      Understanding Bundles
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#directory-structure" class="md-nav__link">
+    Directory structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bundle-rending" class="md-nav__link">
+    Bundle Rending
+  </a>
+  
+    <nav class="md-nav" aria-label="Bundle Rending">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#render-pipeline" class="md-nav__link">
+    Render Pipeline
+  </a>
+  
+    <nav class="md-nav" aria-label="Render Pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-plain-kubernetes-yaml" class="md-nav__link">
+    Phase 1: Plain Kubernetes YAML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-helm-chart-generation" class="md-nav__link">
+    Phase 2: Helm Chart generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-kustomize-post-process" class="md-nav__link">
+    Phase 3: Kustomize Post Process
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fleetyaml" class="md-nav__link">
+    fleet.yaml
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#target-matching" class="md-nav__link">
+    Target Matching
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource-overlays-and-patching" class="md-nav__link">
+    Resource Overlays and Patching
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#directory-structure" class="md-nav__link">
+    Directory structure
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bundle-rending" class="md-nav__link">
+    Bundle Rending
+  </a>
+  
+    <nav class="md-nav" aria-label="Bundle Rending">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#render-pipeline" class="md-nav__link">
+    Render Pipeline
+  </a>
+  
+    <nav class="md-nav" aria-label="Render Pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-plain-kubernetes-yaml" class="md-nav__link">
+    Phase 1: Plain Kubernetes YAML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-helm-chart-generation" class="md-nav__link">
+    Phase 2: Helm Chart generation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-kustomize-post-process" class="md-nav__link">
+    Phase 3: Kustomize Post Process
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fleetyaml" class="md-nav__link">
+    fleet.yaml
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#target-matching" class="md-nav__link">
+    Target Matching
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource-overlays-and-patching" class="md-nav__link">
+    Resource Overlays and Patching
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/rancher/fleet/edit/master/docs/bundles.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  
+                
+                
+                <h1 id="understanding-bundles">Understanding Bundles<a class="headerlink" href="#understanding-bundles" title="Permanent link">&para;</a></h1>
+<p>Each registered <code>GitRepo</code> that is monitored can produce one or more <a href="../concepts/">bundles</a>. The bundle is a
+collection of resources that contains resource that will be deployed to one or more clusters and can be customized
+per target.  This means the structure of the monitored git repository is the same as the structure of a bundle or
+a directory structure of multiple bundles. The location of the bundles is specified in the <code>GitRepo</code> type with
+the <code>spec.bundleDirs</code> field. By default the value is <code>./</code>.</p>
+<h2 id="directory-structure">Directory structure<a class="headerlink" href="#directory-structure" title="Permanent link">&para;</a></h2>
+<p>The directory structure of a single bundle will look like the below depending on your use case.</p>
+<div class="highlight"><pre><span></span><code>./fleet.yaml                # Bundle descriptor (optional)
+./manifests/                # Directory for raw kubernetes YAML
+./chart/                    # Directory for an inline Helm Chart
+./kustomize/                # Directory for kustomization resources
+./overlays/${OVERLAY_NAME}  # Directory for customize raw Kubernetes YAML resources
+</code></pre></div>
+
+<h2 id="bundle-rending">Bundle Rending<a class="headerlink" href="#bundle-rending" title="Permanent link">&para;</a></h2>
+<p>One can choose between using raw Kubernetes YAML, Helm, Kustomize, or some combination of the three. Regardless of
+ the strategy you use, you should
+understand all three approaches to understand the capabilities of the system. Refer to <a href="examples.md">examples</a> for
+specific examples.</p>
+<h3 id="render-pipeline">Render Pipeline<a class="headerlink" href="#render-pipeline" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="../bundleflow.png" /></p>
+<p>A bundle has three types of resources in it.  Plain kubernetes manifests are available in <code>manifest/</code>. Chart files for
+a helm chart are available in <code>chart/</code>.  Finally, kustomize files are in <code>kustomize/</code>.  Each one of these directories
+and content types are optional but combined to create one helm chart that is to be deployed to the cluster. Each
+content type is optional, but regardless of what type of input is chosen the final asset is always a Helm chart.
+Helm is core to the <a href="../architecture/">architecture</a> of Fleet, but this does not mean you are required to author
+Helm charts yourself. You can choose a pure Kubernetes YAML or Kustomize approach.</p>
+<h4 id="phase-1-plain-kubernetes-yaml">Phase 1: Plain Kubernetes YAML<a class="headerlink" href="#phase-1-plain-kubernetes-yaml" title="Permanent link">&para;</a></h4>
+<p>Any resource that is found in <code>manifests/</code> will be copied to the target chart in the <code>chart/templates/</code> folder. This
+means these files can be plain YAML or have helm golang templating.</p>
+<h4 id="phase-2-helm-chart-generation">Phase 2: Helm Chart generation<a class="headerlink" href="#phase-2-helm-chart-generation" title="Permanent link">&para;</a></h4>
+<p>The <code>chart/</code> folder is expected to have Helm chart content in it.  If this folder is not found then a chart will
+be generated on demand.  This means a <code>Chart.yaml</code> will be created for you if not found.  Since content from
+<code>manifests/</code> is copied to <code>chart/templates</code>, one can deploy helm charts without knowning anything about helm, instead
+ using an approach closer to <code>kubectl apply</code>.</p>
+<h4 id="phase-3-kustomize-post-process">Phase 3: Kustomize Post Process<a class="headerlink" href="#phase-3-kustomize-post-process" title="Permanent link">&para;</a></h4>
+<p>After the Helm chart from phase 2 is rendered, Fleet is called as a post renderer to apply run kustomize.  The
+<code>kustomizeDir</code> field from the target or overlays can be used to determine which <code>kustomization.yaml</code> is invoked.
+The objects generated by Helm are put into a field named <code>${kustomizeDir}/manifests.yaml</code> and the <code>kustomization.yaml</code>
+found in <code>kustomizeDir</code> is dynamically modified to add <code>manifests.yaml</code> to the <code>resources:</code> list.</p>
+<h2 id="fleetyaml">fleet.yaml<a class="headerlink" href="#fleetyaml" title="Permanent link">&para;</a></h2>
+<p>A bundle is defined as optionally containing a <code>fleet.yaml</code> file at it's root. Again, this file is optional, but
+for many multi-cluster use cases it is fairly essential.  The structure of the <code>fleet.yaml</code> is essentially the
+same structure as the <code>spec</code> field of the <code>Bundle</code> custom resource definition. Below is a reference of all fields
+and how they are used.  Depending on the which style (single-cluster or multi-cluster) and rendered (raw YAML, Helm,
+or Kustomize) you are using the fields may or may not be applicable.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Used to populate metadata.labels in the Bundle custom resource. The labels of</span>
+<span class="c1"># a bundle are important if you wish to use the BundleNamespaceMapping approach</span>
+<span class="c1"># for common configuration management.</span>
+<span class="nt">labels</span><span class="p">:</span>
+  <span class="nt">custom</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">value</span>
+
+<span class="c1"># Used to populate metadata.annotations in the Bundle custom resource. Currently</span>
+<span class="c1"># there is no specific use of annotations by Fleet and is here just to allow the</span>
+<span class="c1"># users to add additional metadata to bundles.</span>
+<span class="nt">annotations</span><span class="p">:</span>
+  <span class="nt">custom</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">value</span>
+
+<span class="c1"># Use a custom folder for plain Kubernetes YAML files.  This can also refer to a</span>
+<span class="c1"># URL to download resource from.  This uses Hashicorp&#39;s go-getter, so any support</span>
+<span class="c1"># source (http, git, S3) should work.</span>
+<span class="c1"># Default: manifests</span>
+<span class="nt">manifestsDir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./manifests</span>
+
+<span class="c1"># Use a custom folder for kustomize resources. This can also refer to a URL to</span>
+<span class="c1"># download resource from, similar to the manifestDir field</span>
+<span class="c1"># Default: kustomize</span>
+<span class="nt">kustomizeDir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./kustomize</span>
+
+<span class="c1"># Use a custom source for chart resources. This is commonly a URL pointing to</span>
+<span class="c1"># the chart tgz file. Similar to the the manifestDir field any go-getter URL</span>
+<span class="c1"># is supported.</span>
+<span class="c1"># Default: chart</span>
+<span class="nt">chart</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./chart</span>
+
+<span class="c1"># The default namespace to be applied to resources.  This field is not used to</span>
+<span class="c1"># enforce or lock down the deployment to a specific namespace, but instead</span>
+<span class="c1"># provide the default value of the namespace field if one is not specified</span>
+<span class="c1"># in the manifests. If you wish to actually restrict the namespace use then</span>
+<span class="c1"># that should be done using the RBAC of the service account assigned to the</span>
+<span class="c1"># GitRepo</span>
+<span class="c1"># Default: default</span>
+<span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+
+<span class="c1"># When resources are applied the system will wait for the resources to initially</span>
+<span class="c1"># become Ready. If the resources are not ready in this time frame the</span>
+<span class="c1"># application of resources fails and the bundle will stay in a NotApplied state.</span>
+<span class="c1"># Default: 600 (10 minutes)</span>
+<span class="nt">timeoutSeconds</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">600</span>
+
+<span class="c1"># Default values to be based to Helm upon installation. The structure of this</span>
+<span class="c1"># field is the same structure that would be in the values.yaml file.</span>
+<span class="c1"># Default: null</span>
+<span class="nt">values</span><span class="p">:</span>
+    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">custom/value:latest</span>
+
+<span class="c1"># A paused bundle will not update downstream clusters but instead mark the bundle</span>
+<span class="c1"># as OutOfSync. On can the manually confirm that a bundle should be deployed to</span>
+<span class="c1"># the downstream clusters.</span>
+<span class="c1"># Default: false</span>
+<span class="nt">paused</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="nt">rolloutStrategy</span><span class="p">:</span>
+    <span class="c1"># A number or percentage of clusters that can be unavailable during an update</span>
+    <span class="c1"># of a bundle. This follows the same basic approach as a deployment rollout</span>
+    <span class="c1"># strategy.</span>
+    <span class="c1"># default: 10%</span>
+    <span class="nt">maxUnavailable</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">15%</span>
+    <span class="c1"># A number or percentage of cluster partitions that can be unavailable during</span>
+    <span class="c1"># an update of a bundle.</span>
+    <span class="c1"># default: 0</span>
+    <span class="nt">maxUnavailablePartitions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20%</span>
+    <span class="c1"># A number of percentage of how to automatically partition clusters if not</span>
+    <span class="c1"># specific partitioning strategy is configured.</span>
+    <span class="c1"># default: 25%</span>
+    <span class="nt">autoPartitionSize</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10%</span>
+    <span class="c1"># A list of definitions of partitions.  If any target clusters do not match</span>
+    <span class="c1"># the configuration they are added to partitions at the end following the</span>
+    <span class="c1"># autoPartitionSize.</span>
+    <span class="nt">partitions</span><span class="p">:</span>
+      <span class="c1"># A user friend name given to the partition used for Display (optional).</span>
+      <span class="c1"># default: &quot;&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">canary</span>
+      <span class="c1"># A number or percentage of clusters that can be unavailable in this</span>
+      <span class="c1"># partition before this partition is treated as done.</span>
+      <span class="c1"># default: 10%</span>
+      <span class="nt">maxUnavailable</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10%</span>
+      <span class="c1"># Selector matching cluster labels to include in this partition</span>
+      <span class="nt">clusterSelector</span><span class="p">:</span>
+        <span class="nt">matchLabels</span><span class="p">:</span>
+          <span class="nt">env</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">prod</span>
+      <span class="c1"># A cluster group name to include in this partition</span>
+      <span class="nt">clusterGroup</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">agroup</span>
+      <span class="c1"># Selector matching cluster group labels to include in this partition</span>
+      <span class="nt">clusterGroupSelector</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">agroup</span>
+
+<span class="c1"># Targets are used to match clusters that resources should be configured for.</span>
+<span class="c1"># Each target can specify a series of overlays to apply customizations for</span>
+<span class="c1"># that cluster. Targets are evaluated in order and the first one to match is used</span>
+<span class="nt">targets</span><span class="p">:</span>
+<span class="c1"># The name of target. If not specified a default name of the format &quot;target000&quot;</span>
+<span class="c1"># will be used</span>
+<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">prod</span>
+  <span class="c1"># Override namespace</span>
+  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">newvalue</span>
+  <span class="c1"># Override the base dir where the kustomization.yaml is found</span>
+  <span class="c1"># Please note this directory is relative to ./kustomize</span>
+  <span class="nt">kustomizedDir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">production/</span>
+  <span class="c1"># Override the timeoutSeconds parameter</span>
+  <span class="nt">timeoutSeconds</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+  <span class="c1"># Merge in new values used by Helm. The merge logic follows the logic of how Helm</span>
+  <span class="c1"># merges values, which is basically just a map merge and list are overwritten.</span>
+  <span class="nt">values</span><span class="p">:</span>
+    <span class="nt">custom</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">value</span>
+  <span class="c1"># Overlays to be applied on this target in the specified order. The names</span>
+  <span class="c1"># of the overlays correspond to the directory names in the ./overlays folder.</span>
+  <span class="nt">overlays</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">custom2</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">custom3</span>
+  <span class="c1"># A selector used to match clusters.  The structure is the standard</span>
+  <span class="c1"># metav1.LabelSelector format. If clusterGroupSelector or clusterGroup is specified,</span>
+  <span class="c1"># clusterSelector will be used only to further refine the selection after</span>
+  <span class="c1"># clusterGroupSelector and clusterGroup is evaluated.</span>
+  <span class="nt">clusterSelector</span><span class="p">:</span>
+    <span class="nt">matchLabels</span><span class="p">:</span>
+      <span class="nt">env</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">prod</span>
+  <span class="c1"># A selector used to match cluster groups.</span>
+  <span class="nt">clusterGroupSelector</span><span class="p">:</span>
+    <span class="nt">matchLabels</span><span class="p">:</span>
+      <span class="nt">region</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">us-east</span>
+  <span class="c1"># A specific clusterGroup by name that will be selected</span>
+  <span class="nt">clusterGroup</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">group1</span>
+</code></pre></div>
+
+<h2 id="target-matching">Target Matching<a class="headerlink" href="#target-matching" title="Permanent link">&para;</a></h2>
+<p>All clusters and cluster groups in the same namespace as the <code>GitRepo</code>/<code>Bundle</code> will be evaluated against all bundle targets.
+The targets list is evaluated one by one and the first target that matches is used for that bundle for that cluster. If
+no match is made, then no customizations will be applied. The superset of all valid targets for a bundle is
+set in the definition of the <code>GitRepo</code>.  The <code>target</code> definitions in the bundle are only used to decide what configuration
+to apply to the target, where as the actual matching of whether a cluster should be deployed to or not is determined
+by the definition of the <code>GitRepo</code>.</p>
+<p>There are three approaches to matching clusters.
+One can use cluster selectors, cluster group selectors, or an explicit cluster group name.  All criteria is additive so
+the final match is evaluated as "clusterSelector &amp;&amp; clusterGroupSelector &amp;&amp; clusterGroup".  If any of the three have the
+default value it is dropped from the criteria.  The default value is either null or "".  It is important to realize
+that the value <code>{}</code> for a selector means "match everything."</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Match everything</span>
+<span class="nt">clusterSelector</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
+<span class="c1"># Selector ignored</span>
+<span class="nt">clusterSelector</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">null</span>
+</code></pre></div>
+
+<h2 id="resource-overlays-and-patching">Resource Overlays and Patching<a class="headerlink" href="#resource-overlays-and-patching" title="Permanent link">&para;</a></h2>
+<p>A target references a series of overlays and those overlay can have resources in them.  The resource overlay content
+uses a file name based approach.  This is different from kustomize which uses a resource based approach.  In kustomize
+the resource Group, Kind, Version, Name, and Namespace identify resources and are then merged or patched.  For Fleet
+the overlay resources will override or patch content with a matching file name.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Base files</span>
+manifests/deployment.yaml
+manifests/svc.yaml
+<span class="c1"># Overlay files</span>
+<span class="c1"># The follow file we be added</span>
+overlays/custom/configmap.yaml
+<span class="c1"># The following file will replace manifests/svc.yaml</span>
+overlays/custom/svc.yaml
+<span class="c1"># The following file will patch manifest/deployment.yaml</span>
+overlays/custom/deployment_patch.yaml
+</code></pre></div>
+
+<p>A file named <code>foo</code> will replace a file called <code>foo</code> from the base resources or a previous overlay.  In order to patch
+content a file the convention of adding <code>_patch.</code> (notice the trailing period) to the filename is used.  The string <code>_patch.</code>
+will be replaced with <code>.</code> from the file name and that will be used as the target.  For example <code>deployment_patch.yaml</code>
+will target <code>deployment.yaml</code>.  The patch will be applied using JSON Merge, Strategic Merge Patch, or JSON Patch.
+Which strategy is used is based on the file content. Even though JSON strategies are used, the files can be written
+using YAML syntax.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../gitrepo-targets/" title="Mapping to Downstream Clusters" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Mapping to Downstream Clusters
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.df0def68.min.js"></script>
+      <script src="../assets/javascripts/bundle.ba57d267.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.fae956e7.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
