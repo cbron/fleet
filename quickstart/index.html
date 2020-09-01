@@ -731,9 +731,9 @@ things to your cluster.</p>
 
 <p>Install the Fleet Helm charts (there's two because we separate out CRDs for ultimate flexibility.)</p>
 <div class="codehilite"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
-    fleet-crd https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-crd-0.3.0-alpha5.tgz
+    fleet-crd https://github.com/rancher/fleet/releases/download/v0.3.0-alpha6/fleet-crd-0.3.0-alpha6.tgz
 helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
-    fleet https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-0.3.0-alpha5.tgz
+    fleet https://github.com/rancher/fleet/releases/download/v0.3.0-alpha6/fleet-0.3.0-alpha6.tgz
 </code></pre></div>
 
 
@@ -749,7 +749,8 @@ metadata:
   namespace: fleet-local
 spec:
   <span class="c1"># Everything from this repo will be ran in this cluster. You trust me right?</span>
-  repo: <span class="s2">&quot;https://github.com/fleet-demo/simple&quot;</span>
+  repo: <span class="s2">&quot;https://github.com/rancher/fleet-examples&quot;</span>
+  bundleDirs: simple
 EOF
 
 kubectl apply -f example.yaml

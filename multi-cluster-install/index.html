@@ -864,7 +864,7 @@ the <code>ca.pem</code> is not correct. The contents of the <code>${API_SERVER_C
 <p>Once you have validated the API server URL and API server CA parameters, install the following two
 Helm charts.</p>
 <p>First install the Fleet CustomResourcesDefintions.</p>
-<div class="codehilite"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait fleet-crd https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-crd-0.3.0-alpha5.tgz
+<div class="codehilite"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait fleet-crd https://github.com/rancher/fleet/releases/download/v0.3.0-alpha6/fleet-crd-0.3.0-alpha6.tgz
 </code></pre></div>
 
 
@@ -872,7 +872,7 @@ Helm charts.</p>
 <div class="codehilite"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
     --set <span class="nv">apiServerURL</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">API_SERVER_URL</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
     --set-file <span class="nv">apiServerCA</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">API_SERVER_CA</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
-    fleet https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-0.3.0-alpha5.tgz
+    fleet https://github.com/rancher/fleet/releases/download/v0.3.0-alpha6/fleet-0.3.0-alpha6.tgz
 </code></pre></div>
 
 

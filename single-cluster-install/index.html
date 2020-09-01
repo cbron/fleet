@@ -780,13 +780,13 @@ Any Kubernetes community supported version of Kubernetes will work, in practice 
 <p>Install the following two Helm charts.</p>
 <p>First install the Fleet CustomResourcesDefintions.</p>
 <div class="codehilite"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
-    fleet-crd https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-crd-0.3.0-alpha5.tgz
+    fleet-crd https://github.com/rancher/fleet/releases/download/v0.3.0-alpha6/fleet-crd-0.3.0-alpha6.tgz
 </code></pre></div>
 
 
 <p>Second install the Fleet controllers.</p>
 <div class="codehilite"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
-    fleet https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-0.3.0-alpha5.tgz
+    fleet https://github.com/rancher/fleet/releases/download/v0.3.0-alpha6/fleet-0.3.0-alpha6.tgz
 </code></pre></div>
 
 
