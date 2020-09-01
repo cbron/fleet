@@ -708,7 +708,7 @@ such that it will expire after a specific time.</p>
 <code>ClusterRegistationToken</code> is a namespaced type.
 The cluster registration tokens are managed with the <code>ClusterRegistrationToken</code> type.  Create a new
 token with the below YAML.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ClusterRegistrationToken</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ClusterRegistrationToken</span>
 <span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;fleet.cattle.io/v1alpha1&quot;</span>
 <span class="nt">metadata</span><span class="p">:</span>
     <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">new-token</span>
@@ -718,6 +718,7 @@ token with the below YAML.</p>
     <span class="nt">ttlSeconds</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">604800</span>
 </code></pre></div>
 
+
 <h2 id="obtaining-token-value-agent-valuesyaml">Obtaining Token Value (Agent values.yaml)<a class="headerlink" href="#obtaining-token-value-agent-valuesyaml" title="Permanent link">&para;</a></h2>
 <p>The token value is the contents of a <code>values.yaml</code> file that is expected to be passed to <code>helm install</code>
 to install the Fleet agent on a downstream cluster.  The token is stored in a Kubernetes secret referenced
@@ -725,8 +726,9 @@ by the <code>status.secretName</code> field on the newly created <code>ClusterRe
 name is always the same as the <code>ClusterRegistrationToken</code> name. The contents will be in
 the secret's data key <code>values</code>.  To obtain the <code>values.yaml</code> content for the above example YAML one can
 run the following one-liner.</p>
-<div class="highlight"><pre><span></span><code>kubectl -n clusters get secret new-token -o <span class="s1">&#39;jsonpath={.data.values}&#39;</span> <span class="p">|</span> base64 -d &gt; values.yaml
+<div class="codehilite"><pre><span></span><code>kubectl -n clusters get secret new-token -o <span class="s1">&#39;jsonpath={.data.values}&#39;</span> <span class="p">|</span> base64 -d &gt; values.yaml
 </code></pre></div>
+
 
 <p>This <code>values.yaml</code> file can now be used repeatedly by clusters to register until the TTL expires.</p>
                 

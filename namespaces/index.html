@@ -770,7 +770,7 @@ and no <code>Clusters</code>.  It seems to get confusing if you have Clusters in
 always be evaluated against the current namespace.  So if you have clusters in the same namespace you may wish to make them
 canary clusters.</p>
 <p>A <code>BundleNamespaceMapping</code> has only two fields.  Which are as below</p>
-<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BundleNamespaceMapping</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BundleNamespaceMapping</span>
 <span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v0.3.0-alpha5</span>
 <span class="nt">metadata</span><span class="p">:</span>
   <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">not-important</span>
@@ -787,6 +787,7 @@ canary clusters.</p>
   <span class="nt">matchLabels</span><span class="p">:</span>
    <span class="nt">foo</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bar</span>
 </code></pre></div>
+
 
 <p>If the <code>BundleNamespaceMappings</code> <code>bundleSelector</code> field matches a <code>Bundles</code> labels then that <code>Bundle</code> target criteria will
 be evaluated against all clusters in all namespaces that match <code>namespaceSelector</code>. One can specify labels for the created

@@ -796,12 +796,13 @@ a directory structure of multiple bundles. The location of the bundles is specif
 the <code>spec.bundleDirs</code> field. By default the value is <code>./</code>.</p>
 <h2 id="directory-structure">Directory structure<a class="headerlink" href="#directory-structure" title="Permanent link">&para;</a></h2>
 <p>The directory structure of a single bundle will look like the below depending on your use case.</p>
-<div class="highlight"><pre><span></span><code>./fleet.yaml                # Bundle descriptor (optional)
+<div class="codehilite"><pre><span></span><code>./fleet.yaml                # Bundle descriptor (optional)
 ./manifests/                # Directory for raw kubernetes YAML
 ./chart/                    # Directory for an inline Helm Chart
 ./kustomize/                # Directory for kustomization resources
-./overlays/${OVERLAY_NAME}  # Directory for customize raw Kubernetes YAML resources
+./overlays/<span class="cp">${</span><span class="n">OVERLAY_NAME</span><span class="cp">}</span>  # Directory for customize raw Kubernetes YAML resources
 </code></pre></div>
+
 
 <h2 id="bundle-rending">Bundle Rending<a class="headerlink" href="#bundle-rending" title="Permanent link">&para;</a></h2>
 <p>One can choose between using raw Kubernetes YAML, Helm, Kustomize, or some combination of the three. Regardless of
@@ -835,7 +836,7 @@ for many multi-cluster use cases it is fairly essential.  The structure of the <
 same structure as the <code>spec</code> field of the <code>Bundle</code> custom resource definition. Below is a reference of all fields
 and how they are used.  Depending on the which style (single-cluster or multi-cluster) and rendered (raw YAML, Helm,
 or Kustomize) you are using the fields may or may not be applicable.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Used to populate metadata.labels in the Bundle custom resource. The labels of</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Used to populate metadata.labels in the Bundle custom resource. The labels of</span>
 <span class="c1"># a bundle are important if you wish to use the BundleNamespaceMapping approach</span>
 <span class="c1"># for common configuration management.</span>
 <span class="nt">labels</span><span class="p">:</span>
@@ -963,6 +964,7 @@ or Kustomize) you are using the fields may or may not be applicable.</p>
   <span class="nt">clusterGroup</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">group1</span>
 </code></pre></div>
 
+
 <h2 id="target-matching">Target Matching<a class="headerlink" href="#target-matching" title="Permanent link">&para;</a></h2>
 <p>All clusters and cluster groups in the same namespace as the <code>GitRepo</code>/<code>Bundle</code> will be evaluated against all bundle targets.
 The targets list is evaluated one by one and the first target that matches is used for that bundle for that cluster. If
@@ -975,18 +977,19 @@ One can use cluster selectors, cluster group selectors, or an explicit cluster g
 the final match is evaluated as "clusterSelector &amp;&amp; clusterGroupSelector &amp;&amp; clusterGroup".  If any of the three have the
 default value it is dropped from the criteria.  The default value is either null or "".  It is important to realize
 that the value <code>{}</code> for a selector means "match everything."</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Match everything</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Match everything</span>
 <span class="nt">clusterSelector</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
 <span class="c1"># Selector ignored</span>
 <span class="nt">clusterSelector</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">null</span>
 </code></pre></div>
+
 
 <h2 id="resource-overlays-and-patching">Resource Overlays and Patching<a class="headerlink" href="#resource-overlays-and-patching" title="Permanent link">&para;</a></h2>
 <p>A target references a series of overlays and those overlay can have resources in them.  The resource overlay content
 uses a file name based approach.  This is different from kustomize which uses a resource based approach.  In kustomize
 the resource Group, Kind, Version, Name, and Namespace identify resources and are then merged or patched.  For Fleet
 the overlay resources will override or patch content with a matching file name.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Base files</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Base files</span>
 manifests/deployment.yaml
 manifests/svc.yaml
 <span class="c1"># Overlay files</span>
@@ -997,6 +1000,7 @@ overlays/custom/svc.yaml
 <span class="c1"># The following file will patch manifest/deployment.yaml</span>
 overlays/custom/deployment_patch.yaml
 </code></pre></div>
+
 
 <p>A file named <code>foo</code> will replace a file called <code>foo</code> from the base resources or a previous overlay.  In order to patch
 content a file the convention of adding <code>_patch.</code> (notice the trailing period) to the filename is used.  The string <code>_patch.</code>

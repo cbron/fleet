@@ -683,20 +683,22 @@
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
 <p>Get helm if you don't have it.  Helm 3 is just a CLI and won't do bad insecure
 things to your cluster.</p>
-<div class="highlight"><pre><span></span><code>brew install helm
+<div class="codehilite"><pre><span></span><code><span class="err">brew install helm</span>
 </code></pre></div>
 
+
 <p>Install the Fleet Helm charts (there's two because we separate out CRDs for ultimate flexibility.)</p>
-<div class="highlight"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
+<div class="codehilite"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
     fleet-crd https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-crd-0.3.0-alpha5.tgz
 helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
     fleet https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-0.3.0-alpha5.tgz
 </code></pre></div>
 
+
 <h2 id="add-a-git-repo-to-watch">Add a Git Repo to watch<a class="headerlink" href="#add-a-git-repo-to-watch" title="Permanent link">&para;</a></h2>
 <p>Change <code>spec.repo</code> to your git repo of choice.  Kubernetes manifest files that should
 be deployed should be in <code>/manifests</code> in your repo.</p>
-<div class="highlight"><pre><span></span><code>cat &gt; example.yaml &lt;&lt; <span class="s2">&quot;EOF&quot;</span>
+<div class="codehilite"><pre><span></span><code>cat &gt; example.yaml &lt;&lt; <span class="s2">&quot;EOF&quot;</span>
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
@@ -711,17 +713,23 @@ EOF
 kubectl apply -f example.yaml
 </code></pre></div>
 
+
 <h2 id="get-status">Get Status<a class="headerlink" href="#get-status" title="Permanent link">&para;</a></h2>
 <p>Get status of what fleet is doing</p>
-<div class="highlight"><pre><span></span><code>kubectl -n fleet-local get fleet
+<div class="codehilite"><pre><span></span><code>kubectl -n fleet-local get fleet
 </code></pre></div>
 
+
 <p>You should see something like this get created in your cluster.</p>
-<p><div class="highlight"><pre><span></span><code>kubectl get deploy frontend
+<div class="codehilite"><pre><span></span><code><span class="err">kubectl get deploy frontend</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>NAME       READY   UP-TO-DATE   AVAILABLE   AGE
-frontend   3/3     3            3           116m
-</code></pre></div></p>
+
+
+<div class="codehilite"><pre><span></span><code><span class="err">NAME       READY   UP-TO-DATE   AVAILABLE   AGE</span>
+<span class="err">frontend   3/3     3            3           116m</span>
+</code></pre></div>
+
+
 <p>Enjoy and read the <a href="https://rancher.github.io/fleet">docs</a>.</p>
                 
               

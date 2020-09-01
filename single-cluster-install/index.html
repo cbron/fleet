@@ -720,35 +720,45 @@ use case for production for smaller scale.</p>
 <p>Fleet is distributed as a Helm chart. Helm 3 is just a CLI and has no server side component so it's
 pretty straight forward. To install the Helm 3 CLI follow the
 <a href="https://helm.sh/docs/intro/install/">official install instructions</a>. The TL;DR is</p>
-<p>macOS
-<div class="highlight"><pre><span></span><code>brew install helm
+<p>macOS</p>
+<div class="codehilite"><pre><span></span><code><span class="err">brew install helm</span>
 </code></pre></div>
-Windows
-<div class="highlight"><pre><span></span><code>choco install kubernetes-helm
-</code></pre></div></p>
+
+
+<p>Windows</p>
+<div class="codehilite"><pre><span></span><code><span class="err">choco install kubernetes-helm</span>
+</code></pre></div>
+
+
 <h3 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">&para;</a></h3>
 <p>Fleet is a controller running on a Kubernetes cluster so an existing cluster is required. For the
 single cluster use case you would install Fleet to the cluster which you intend to manage with GitOps.
 Any Kubernetes community supported version of Kubernetes will work, in practice this means 1.15 or greater.</p>
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
 <p>Install the following two Helm charts.</p>
-<p>First install the Fleet CustomResourcesDefintions.
-<div class="highlight"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
+<p>First install the Fleet CustomResourcesDefintions.</p>
+<div class="codehilite"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
     fleet-crd https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-crd-0.3.0-alpha5.tgz
-</code></pre></div></p>
-<p>Second install the Fleet controllers.
-<div class="highlight"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
+</code></pre></div>
+
+
+<p>Second install the Fleet controllers.</p>
+<div class="codehilite"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
     fleet https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-0.3.0-alpha5.tgz
-</code></pre></div></p>
+</code></pre></div>
+
+
 <p>Fleet should be ready to use now for single cluster. You can check the status of the Fleet controller pods by
 running the below commands.</p>
-<div class="highlight"><pre><span></span><code>kubectl -n fleet-system logs -l <span class="nv">app</span><span class="o">=</span>fleet-controller
+<div class="codehilite"><pre><span></span><code>kubectl -n fleet-system logs -l <span class="nv">app</span><span class="o">=</span>fleet-controller
 kubectl -n fleet-system get pods -l <span class="nv">app</span><span class="o">=</span>fleet-controller
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>NAME                                READY   STATUS    RESTARTS   AGE
-fleet-controller-64f49d756b-n57wq   1/1     Running   0          3m21s
+
+<div class="codehilite"><pre><span></span><code><span class="err">NAME                                READY   STATUS    RESTARTS   AGE</span>
+<span class="err">fleet-controller-64f49d756b-n57wq   1/1     Running   0          3m21s</span>
 </code></pre></div>
+
 
 <p>You can now <a href="../gitrepo-add/">register some git repos</a> in the <code>fleet-local</code> namespace to start deploying Kubernetes resources.</p>
                 

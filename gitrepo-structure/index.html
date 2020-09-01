@@ -606,12 +606,13 @@
                 
                 <h1 id="expected-repo-structure">Expected Repo Structure<a class="headerlink" href="#expected-repo-structure" title="Permanent link">&para;</a></h1>
 <p>A registered git repository should have the following structure</p>
-<div class="highlight"><pre><span></span><code>./fleet.yaml                # Bundle descriptor (optional)
+<div class="codehilite"><pre><span></span><code>./fleet.yaml                # Bundle descriptor (optional)
 ./manifests/                # Directory for raw kubernetes YAML (if used)
 ./chart/                    # Directory for an inline Helm Chart (if used)
 ./kustomize/                # Directory for kustomization resources (if used)
-./overlays/${OVERLAY_NAME}  # Directory for customize raw Kubernetes YAML resources (if used)
+./overlays/<span class="cp">${</span><span class="n">OVERLAY_NAME</span><span class="cp">}</span>  # Directory for customize raw Kubernetes YAML resources (if used)
 </code></pre></div>
+
 
 <p>These directories can be configured to different paths using the <code>fleet.yaml</code> file. Refer to
 the <a href="../bundles/">bundle reference</a> documentation on how to customize the behavior.</p>

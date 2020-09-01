@@ -732,12 +732,16 @@ need to register remote downstream clusters with the Fleet manager.</p>
 <p>Fleet is distributed as a Helm chart. Helm 3 is just a CLI and has no server side component so it's
 pretty straight forward. To install the Helm 3 CLI follow the
 <a href="https://helm.sh/docs/intro/install/">official install instructions</a>. The TL;DR is</p>
-<p>macOS
-<div class="highlight"><pre><span></span><code>brew install helm
+<p>macOS</p>
+<div class="codehilite"><pre><span></span><code><span class="err">brew install helm</span>
 </code></pre></div>
-Windows
-<div class="highlight"><pre><span></span><code>choco install kubernetes-helm
-</code></pre></div></p>
+
+
+<p>Windows</p>
+<div class="codehilite"><pre><span></span><code><span class="err">choco install kubernetes-helm</span>
+</code></pre></div>
+
+
 <h3 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">&para;</a></h3>
 <p>The Fleet manager is a controller running on a Kubernetes cluster so an existing cluster is required. All
 downstream cluster that will be managed will need to communicate to this central Kubernetes cluster. This
@@ -751,22 +755,26 @@ API server must be accessible to the downstream clusters.  You will also need
 to obtain the CA certificate of the API server. The easiest way to obtain this information
 is typically from your kubeconfig file (<code>${HOME}/.kube/config</code>). The <code>server</code> and
 <code>certificate-authority</code> fields will have these values.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">clusters</span><span class="p">:</span>
 <span class="p p-Indicator">-</span> <span class="nt">cluster</span><span class="p">:</span>
     <span class="nt">certificate-authority-data</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">LS0tLS1CRUdJTi...</span>
     <span class="nt">server</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://example.com:6443</span>
 </code></pre></div>
 
+
 <p>Please note that the <code>certificate-authority-data</code> field is base64 encoded and will need to be
 decoded before you save it into a file. This can be done by saving the base64 encoded contents to
-a file and then run
-<div class="highlight"><pre><span></span><code>base64 -d encoded-file &gt; ca.pem
+a file and then run</p>
+<div class="codehilite"><pre><span></span><code>base64 -d encoded-file &gt; ca.pem
 </code></pre></div>
-If you have <code>jq</code> and <code>base64</code> available then this one-liners will pull all CA certificates from your
+
+
+<p>If you have <code>jq</code> and <code>base64</code> available then this one-liners will pull all CA certificates from your
 <code>${HOME}/.kube/config</code> and place then in a file named <code>ca.pem</code>.</p>
-<div class="highlight"><pre><span></span><code>kubectl config view -o json --raw  <span class="p">|</span> jq -r <span class="s1">&#39;.clusters[].cluster[&quot;certificate-authority-data&quot;]&#39;</span> <span class="p">|</span> base64 -d &gt; ca.pem
+<div class="codehilite"><pre><span></span><code>kubectl config view -o json --raw  <span class="p">|</span> jq -r <span class="s1">&#39;.clusters[].cluster[&quot;certificate-authority-data&quot;]&#39;</span> <span class="p">|</span> base64 -d &gt; ca.pem
 </code></pre></div>
+
 
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
 <p>In the following example it will be assumed the API server URL is <code>https://example.com:6443</code>
@@ -774,58 +782,68 @@ and the CA certificate is in the file <code>ca.pem</code>. If your API server UR
 omit the <code>apiServerCA</code> parameter below or just create an empty <code>ca.pem</code> file (ie <code>touch ca.pem</code>).</p>
 <p>Run the following commands</p>
 <p>Setup the environment with your specific values.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">API_SERVER_URL</span><span class="o">=</span><span class="s2">&quot;https://example.com:6443&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">API_SERVER_URL</span><span class="o">=</span><span class="s2">&quot;https://example.com:6443&quot;</span>
 <span class="c1"># Leave empty if your API server is signed by a well known CA</span>
 <span class="nv">API_SERVER_CA</span><span class="o">=</span><span class="s2">&quot;ca.pem&quot;</span>
 </code></pre></div>
 
+
 <p>First validate the server URL is correct.</p>
-<div class="highlight"><pre><span></span><code>curl -fLk <span class="si">${</span><span class="nv">API_SERVER_URL</span><span class="si">}</span>/version
+<div class="codehilite"><pre><span></span><code>curl -fLk <span class="si">${</span><span class="nv">API_SERVER_URL</span><span class="si">}</span>/version
 </code></pre></div>
+
 
 <p>The output of this command should be JSON with the version of the Kubernetes server or a <code>401 Unauthorized</code> error.
 If you do not get either of these results than please ensure you have the correct URL. The API server port is typically
 6443 for Kubernetes.</p>
 <p>Next validate that the CA certificate is proper by running the below command.  If your API server is signed by a
 well known CA then omit the <code>--cacert ${API_SERVER_CA}</code> port of the command.</p>
-<div class="highlight"><pre><span></span><code>curl -fL --cacert <span class="si">${</span><span class="nv">API_SERVER_CA</span><span class="si">}</span> <span class="si">${</span><span class="nv">API_SERVER_URL</span><span class="si">}</span>/version
+<div class="codehilite"><pre><span></span><code>curl -fL --cacert <span class="si">${</span><span class="nv">API_SERVER_CA</span><span class="si">}</span> <span class="si">${</span><span class="nv">API_SERVER_URL</span><span class="si">}</span>/version
 </code></pre></div>
+
 
 <p>If you get a valid JSON response or an <code>401 Unauthorized</code> then it worked. The Unauthorized error is
 only because the curl command is not setting proper credentials, but this validates that the TLS
 connection work and the <code>ca.pem</code> is correct for this URL. If you get a <code>SSL certificate problem</code> then
 the <code>ca.pem</code> is not correct. The contents of the <code>${API_SERVER_CA}</code> file should look similar to the below</p>
-<div class="highlight"><pre><span></span><code>-----BEGIN CERTIFICATE-----
-MIIBVjCB/qADAgECAgEAMAoGCCqGSM49BAMCMCMxITAfBgNVBAMMGGszcy1zZXJ2
-ZXItY2FAMTU5ODM5MDQ0NzAeFw0yMDA4MjUyMTIwNDdaFw0zMDA4MjMyMTIwNDda
-MCMxITAfBgNVBAMMGGszcy1zZXJ2ZXItY2FAMTU5ODM5MDQ0NzBZMBMGByqGSM49
-AgEGCCqGSM49AwEHA0IABDXlQNkXnwUPdbSgGz5Rk6U9ldGFjF6y1YyF36cNGk4E
-0lMgNcVVD9gKuUSXEJk8tzHz3ra/+yTwSL5xQeLHBl+jIzAhMA4GA1UdDwEB/wQE
-AwICpDAPBgNVHRMBAf8EBTADAQH/MAoGCCqGSM49BAMCA0cAMEQCIFMtZ5gGDoDs
-ciRyve+T4xbRNVHES39tjjup/LuN4tAgAiAteeB3jgpTMpZyZcOOHl9gpZ8PgEcN
-KDs/pb3fnMTtpA==
------END CERTIFICATE-----
+<div class="codehilite"><pre><span></span><code><span class="err">-----BEGIN CERTIFICATE-----</span>
+<span class="err">MIIBVjCB/qADAgECAgEAMAoGCCqGSM49BAMCMCMxITAfBgNVBAMMGGszcy1zZXJ2</span>
+<span class="err">ZXItY2FAMTU5ODM5MDQ0NzAeFw0yMDA4MjUyMTIwNDdaFw0zMDA4MjMyMTIwNDda</span>
+<span class="err">MCMxITAfBgNVBAMMGGszcy1zZXJ2ZXItY2FAMTU5ODM5MDQ0NzBZMBMGByqGSM49</span>
+<span class="err">AgEGCCqGSM49AwEHA0IABDXlQNkXnwUPdbSgGz5Rk6U9ldGFjF6y1YyF36cNGk4E</span>
+<span class="err">0lMgNcVVD9gKuUSXEJk8tzHz3ra/+yTwSL5xQeLHBl+jIzAhMA4GA1UdDwEB/wQE</span>
+<span class="err">AwICpDAPBgNVHRMBAf8EBTADAQH/MAoGCCqGSM49BAMCA0cAMEQCIFMtZ5gGDoDs</span>
+<span class="err">ciRyve+T4xbRNVHES39tjjup/LuN4tAgAiAteeB3jgpTMpZyZcOOHl9gpZ8PgEcN</span>
+<span class="err">KDs/pb3fnMTtpA==</span>
+<span class="err">-----END CERTIFICATE-----</span>
 </code></pre></div>
+
 
 <p>Once you have validated the API server URL and API server CA parameters, install the following two
 Helm charts.</p>
-<p>First install the Fleet CustomResourcesDefintions.
-<div class="highlight"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait fleet-crd https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-crd-0.3.0-alpha5.tgz
-</code></pre></div></p>
-<p>Second install the Fleet controllers.
-<div class="highlight"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
+<p>First install the Fleet CustomResourcesDefintions.</p>
+<div class="codehilite"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait fleet-crd https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-crd-0.3.0-alpha5.tgz
+</code></pre></div>
+
+
+<p>Second install the Fleet controllers.</p>
+<div class="codehilite"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
     --set <span class="nv">apiServerURL</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">API_SERVER_URL</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
     --set-file <span class="nv">apiServerCA</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">API_SERVER_CA</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
     fleet https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-0.3.0-alpha5.tgz
-</code></pre></div></p>
+</code></pre></div>
+
+
 <p>Fleet should be ready to use. You can check the status of the Fleet controller pods by running the below commands.</p>
-<div class="highlight"><pre><span></span><code>kubectl -n fleet-system logs -l <span class="nv">app</span><span class="o">=</span>fleet-controller
+<div class="codehilite"><pre><span></span><code>kubectl -n fleet-system logs -l <span class="nv">app</span><span class="o">=</span>fleet-controller
 kubectl -n fleet-system get pods -l <span class="nv">app</span><span class="o">=</span>fleet-controller
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>NAME                                READY   STATUS    RESTARTS   AGE
-fleet-controller-64f49d756b-n57wq   1/1     Running   0          3m21s
+
+<div class="codehilite"><pre><span></span><code><span class="err">NAME                                READY   STATUS    RESTARTS   AGE</span>
+<span class="err">fleet-controller-64f49d756b-n57wq   1/1     Running   0          3m21s</span>
 </code></pre></div>
+
 
 <p>At this point the Fleet manager should be ready. You can now <a href="../cluster-overview/">register clusters</a> and <a href="../gitrepo-add/">git repos</a> with 
 the Fleet manager.</p>

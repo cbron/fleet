@@ -608,7 +608,7 @@
 <p>If you delete a <code>GitRepo</code> from the Fleet Manager the <code>Bundles</code> created by the git repo are not automatically removed.
 This is to prevent accidentally deleting software from clusters by just modifying the git repos. To fully remove
 the deployed software just delete the corresponding bundles too. This can be done by running</p>
-<div class="highlight"><pre><span></span><code>kubectl -n <span class="s2">&quot;</span><span class="si">${</span><span class="nv">REPO_NAMESPACE</span><span class="si">}</span><span class="s2">&quot;</span> delete bundles.fleet.cattle.io -l fleet.cattle.io/repo-name<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">REPO_NAME</span><span class="si">}</span><span class="s2">&quot;</span>
+<div class="codehilite"><pre><span></span><code>kubectl -n <span class="s2">&quot;</span><span class="si">${</span><span class="nv">REPO_NAMESPACE</span><span class="si">}</span><span class="s2">&quot;</span> delete bundles.fleet.cattle.io -l fleet.cattle.io/repo-name<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">REPO_NAME</span><span class="si">}</span><span class="s2">&quot;</span>
 </code></pre></div>
                 
               

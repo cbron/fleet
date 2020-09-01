@@ -690,9 +690,10 @@ repos can be deployed to it.</p>
 is represented by the <code>values.yaml</code> file and the client ID.  The client ID is optional.</p>
 <p>First follow the <a href="../cluster-tokens/">cluster registration token page</a> to obtain the <code>values.yaml</code> file to be used.</p>
 <p>Second setup your environment to use use a client ID.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># If no client ID is going to be used then leave the value blank</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># If no client ID is going to be used then leave the value blank</span>
 <span class="nv">CLUSTER_CLIENT_ID</span><span class="o">=</span><span class="s2">&quot;a-unique-value-for-this-cluster&quot;</span>
 </code></pre></div>
+
 
 <p>Finally, install the agent using Helm.</p>
 <div class="admonition hint">
@@ -704,26 +705,30 @@ is represented by the <code>values.yaml</code> file and the client ID.  The clie
 <p>Helm will use the default context in <code>${HOME}/.kube/config</code> to deploy the agent. Use <code>--kubeconfig</code> and <code>--kube-context</code>
 to change which cluster Helm is installing to.</p>
 </div>
-<div class="highlight"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
+<div class="codehilite"><pre><span></span><code>helm -n fleet-system install --create-namespace --wait <span class="se">\</span>
     --set <span class="nv">clientID</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">CLUSTER_CLIENT_ID</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
     --values values.yaml <span class="se">\</span>
     fleet-agent https://github.com/rancher/fleet/releases/download/v0.3.0-alpha5/fleet-agent-0.3.0-alpha5.tgz
 </code></pre></div>
 
+
 <p>The agent should now be deployed.  You can check that status of the fleet pods by running the below commands.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Ensure kubectl is pointing to the right cluster</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Ensure kubectl is pointing to the right cluster</span>
 kubectl -n fleet-system logs -l <span class="nv">app</span><span class="o">=</span>fleet-agent
 kubectl -n fleet-system get pods -l <span class="nv">app</span><span class="o">=</span>fleet-agent
 </code></pre></div>
 
+
 <p>Additionally you should see a new cluster registered in the Fleet manager.  Below is an example of checking that a new cluster
 was registered in the <code>clusters</code> <a href="../namespaces/">namespace</a>.  Please ensure your <code>${HOME}/.kube/config</code> is pointed to the Fleet
 manager to run this command.</p>
-<p><div class="highlight"><pre><span></span><code>kubectl -n clusters get clusters.fleet.cattle.io
+<div class="codehilite"><pre><span></span><code>kubectl -n clusters get clusters.fleet.cattle.io
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>NAME                   BUNDLES-READY   NODES-READY   SAMPLE-NODE             LAST-SEEN              STATUS
-cluster-ab13e54400f1   1/1             1/1           k3d-cluster2-server-0   2020-08-31T19:23:10Z   
-</code></pre></div></p>
+
+
+<div class="codehilite"><pre><span></span><code><span class="err">NAME                   BUNDLES-READY   NODES-READY   SAMPLE-NODE             LAST-SEEN              STATUS</span>
+<span class="err">cluster-ab13e54400f1   1/1             1/1           k3d-cluster2-server-0   2020-08-31T19:23:10Z   </span>
+</code></pre></div>
                 
               
               

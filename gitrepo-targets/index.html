@@ -691,7 +691,7 @@
 <h2 id="defining-targets">Defining targets<a class="headerlink" href="#defining-targets" title="Permanent link">&para;</a></h2>
 <p>The deployment targets of <code>GitRepo</code> is done using the <code>spec.targets</code> field to
 match clusters or cluster groups. The YAML specification is as below.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">GitRepo</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">GitRepo</span>
 <span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">fleet.cattle.io/v1alpha1</span>
 <span class="nt">metadata</span><span class="p">:</span>
   <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">myrepo</span>
@@ -721,6 +721,7 @@ match clusters or cluster groups. The YAML specification is as below.</p>
     <span class="nt">clusterGroup</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">group1</span>
 </code></pre></div>
 
+
 <h2 id="target-matching">Target Matching<a class="headerlink" href="#target-matching" title="Permanent link">&para;</a></h2>
 <p>All clusters and cluster groups in the same namespace as the <code>GitRepo</code> will be evaluated against all targets.
 If any of the targets match the cluster then the <code>GitRepo</code> will be deployed to the downstream cluster. If
@@ -730,18 +731,20 @@ One can use cluster selectors, cluster group selectors, or an explicit cluster g
 the final match is evaluated as "clusterSelector &amp;&amp; clusterGroupSelector &amp;&amp; clusterGroup".  If any of the three have the
 default value it is dropped from the criteria.  The default value is either null or "".  It is important to realize
 that the value <code>{}</code> for a selector means "match everything."</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Match everything</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Match everything</span>
 <span class="nt">clusterSelector</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
 <span class="c1"># Selector ignored</span>
 <span class="nt">clusterSelector</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">null</span>
 </code></pre></div>
 
+
 <h2 id="default-target">Default target<a class="headerlink" href="#default-target" title="Permanent link">&para;</a></h2>
 <p>If no target is set for the <code>GitRepo</code> then the default targets value is applied.  The default targets value is as below.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">targets</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">targets</span><span class="p">:</span>
 <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
   <span class="nt">clusterGroup</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
 </code></pre></div>
+
 
 <p>This means if you wish to setup a default location non-configured GitRepos will go to, then just create a cluster group called default
 and add clusters to it.</p>
