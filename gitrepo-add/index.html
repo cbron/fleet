@@ -753,11 +753,14 @@ to the inline comments as the to means of each field</p>
 
   <span class="c1"># A git repo can produce multiple bundles or maybe your bundle</span>
   <span class="c1"># is not at the root of the git repo. The below field is expected</span>
-  <span class="c1"># to be comma separated and supports path globbing (ex: some/*/path)</span>
+  <span class="c1"># to be an array of paths and supports path globbing (ex: some/*/path)</span>
   <span class="c1">#</span>
   <span class="c1"># Example:</span>
-  <span class="c1"># bundleDirs: single-path,multiple-paths/*</span>
-  <span class="nt">bundleDirs</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">simple</span>
+  <span class="c1"># bundleDirs:</span>
+  <span class="c1"># - single-path</span>
+  <span class="c1"># - multiple-paths/*</span>
+  <span class="nt">bundleDirs</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">simple</span>
 
   <span class="c1"># The service account that will be used to perform this deployment.</span>
   <span class="c1"># This is the name of the service account that exists in the</span>
